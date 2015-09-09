@@ -73,7 +73,11 @@ public class POSDevelop
 		//StochasticGradientDescent sgd = new MultinomialPerceptron(model.getWeightVector(), false, learning_rate);
 		//StochasticGradientDescent sgd = new MultinomialPerceptron(model.getWeightVector(), true, learning_rate);
 		//StochasticGradientDescent sgd = new MultinomialAdaGradHinge(model.getWeightVector(), average, learning_rate, ridge);
-		StochasticGradientDescent sgd = new MultinomialAdaGradHinge(model.getWeightVector(), true, learning_rate, ridge);
+		//StochasticGradientDescent sgd = new MultinomialAdaGradHinge(model.getWeightVector(), average, learning_rate, 0);
+		StochasticGradientDescent sgd = new MultinomialAdaGradHinge(model.getWeightVector(), average, 0.2, 0.1);
+		//StochasticGradientDescent sgd = new MultinomialAdaGradHinge(model.getWeightVector(), true, learning_rate, ridge);
+		//StochasticGradientDescent sgd = new MultinomialAdaGradHinge(model.getWeightVector(), true, learning_rate, 0);
+		//StochasticGradientDescent sgd = new MultinomialAdaGradHinge(model.getWeightVector(), true, learning_rate, 0.2);
 		Eval eval = new AccuracyEval();
 		tagger.setFlag(NLPFlag.EVALUATE);
 		tagger.setEval(eval);
