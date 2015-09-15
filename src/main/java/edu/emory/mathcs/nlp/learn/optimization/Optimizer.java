@@ -13,33 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.emory.mathcs.nlp.component.pos;
+package edu.emory.mathcs.nlp.learn.optimization;
 
-import edu.emory.mathcs.nlp.component.util.eval.AccuracyEval;
-import edu.emory.mathcs.nlp.component.util.eval.Eval;
-import edu.emory.mathcs.nlp.component.util.state.L2RState;
+import java.util.List;
+
+import edu.emory.mathcs.nlp.learn.util.BinomialLabel;
+import edu.emory.mathcs.nlp.learn.util.Instance;
+import edu.emory.mathcs.nlp.learn.weight.WeightVector;
 
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
  */
-public class POSState<N extends POSNode> extends L2RState<N>
+public abstract class Optimizer
 {
-	AmbiguityClassMap ambiguity_class_map;
+	protected WeightVector weight_vector;
 	
-	public POSState(N[] nodes, AmbiguityClassMap map)
+	public Optimizer(WeightVector weightVector)
 	{
-		super(nodes, N::getPOSTag, N::setPOSTag);
-		ambiguity_class_map = map;
+		weight_vector = weightVector;
 	}
+	
+	 protected byte[] getBinaryLabels(List<Instance> instances, int currLabel)
+	 {
+		 int i, size = instances.size();
+		 byte[] y = new byte[size];
 
-	@Override
-	public void evaluate(Eval eval)
-	{
-		evaluateTokens((AccuracyEval)eval);
-	}
-	
-	public String getAmbiguityClass(N node)
-	{
-		return ambiguity_class_map.get(node);
-	}
+		 for (i=0; i<size; i++)
+			 y[i] = instances.get(i).isLabel(currLabel) ? BinomialLabel.POSITIVE  : BinomialLabel.NEGATIVE;
+
+		 return y;
+	 }
 }

@@ -13,33 +13,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.emory.mathcs.nlp.component.pos;
-
-import edu.emory.mathcs.nlp.component.util.eval.AccuracyEval;
-import edu.emory.mathcs.nlp.component.util.eval.Eval;
-import edu.emory.mathcs.nlp.component.util.state.L2RState;
+package edu.emory.mathcs.nlp.component.util.eval;
 
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
  */
-public class POSState<N extends POSNode> extends L2RState<N>
+public class AccuracyEval implements Eval
 {
-	AmbiguityClassMap ambiguity_class_map;
+	private int correct;
+	private int total;
 	
-	public POSState(N[] nodes, AmbiguityClassMap map)
+	public AccuracyEval()
 	{
-		super(nodes, N::getPOSTag, N::setPOSTag);
-		ambiguity_class_map = map;
+		clear();
 	}
-
+	
+	public void add(int correct, int total)
+	{
+		this.correct += correct;
+		this.total   += total;
+	}
+	
+	public void clear()
+	{
+		correct = 0;
+		total   = 0;
+	}
+	
+	public int correct()
+	{
+		return correct;
+	}
+	
+	public int total()
+	{
+		return total;
+	}
+	
 	@Override
-	public void evaluate(Eval eval)
+	public double score()
 	{
-		evaluateTokens((AccuracyEval)eval);
-	}
-	
-	public String getAmbiguityClass(N node)
-	{
-		return ambiguity_class_map.get(node);
+		return 100d * correct / total;
 	}
 }
