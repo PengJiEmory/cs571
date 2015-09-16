@@ -13,16 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.emory.mathcs.nlp.component.util;
+package edu.emory.mathcs.nlp.component.util.config;
 
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
  */
-public enum NLPFlag
+public interface OptimizerXML
 {
-	COLLECT,
-	TRAIN,
-	AGGREGATE,
-	EVALUATE,
-	DECODE;
+//	========================== ALGORITHMS ==========================
+	
+	String PERCEPTRON			= "perceptron";
+	String ADAGRAD				= "adagrad";
+	String ADAGRAD_MINI_BATCH	= "adagrad-mini-batch";
+	String ADADELTA_MINI_BATCH	= "adadelta-mini-batch";
+	String LIBLINEAR_L2_SVC		= "liblinear-l2-svc";
 }

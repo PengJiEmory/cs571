@@ -17,7 +17,6 @@ package edu.emory.mathcs.nlp.learn.optimization;
 
 import java.util.List;
 
-import edu.emory.mathcs.nlp.learn.util.BinomialLabel;
 import edu.emory.mathcs.nlp.learn.util.Instance;
 import edu.emory.mathcs.nlp.learn.weight.WeightVector;
 
@@ -27,20 +26,18 @@ import edu.emory.mathcs.nlp.learn.weight.WeightVector;
 public abstract class Optimizer
 {
 	protected WeightVector weight_vector;
+	private OptimizerType type;
 	
-	public Optimizer(WeightVector weightVector)
+	public Optimizer(WeightVector weightVector, OptimizerType type)
 	{
 		weight_vector = weightVector;
+		this.type = type;
 	}
 	
-	 protected byte[] getBinaryLabels(List<Instance> instances, int currLabel)
-	 {
-		 int i, size = instances.size();
-		 byte[] y = new byte[size];
-
-		 for (i=0; i<size; i++)
-			 y[i] = instances.get(i).isLabel(currLabel) ? BinomialLabel.POSITIVE  : BinomialLabel.NEGATIVE;
-
-		 return y;
-	 }
+	public OptimizerType getType()
+	{
+		return type;
+	}
+	
+	public abstract void train(List<Instance> instances);
 }

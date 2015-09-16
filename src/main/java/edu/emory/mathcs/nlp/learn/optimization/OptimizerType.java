@@ -13,16 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.emory.mathcs.nlp.component.util;
+package edu.emory.mathcs.nlp.learn.optimization;
 
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
  */
-public enum NLPFlag
+public enum OptimizerType
 {
-	COLLECT,
-	TRAIN,
-	AGGREGATE,
-	EVALUATE,
-	DECODE;
+	ONLINE,
+	ONE_VS_ALL;
 }
