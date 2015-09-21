@@ -7,19 +7,19 @@
     </tsv>
 
     <optimizer>
-        <algorithm>liblinear-l2-svc</algorithm>
+        <algorithm>adadelta-mini-batch</algorithm>
         <label_cutoff>4</label_cutoff>
         <feature_cutoff>3</feature_cutoff>
         <reset_weights>false</reset_weights>
-        <average>true</average>
+        <average>false</average>
         <batch_ratio>0.1</batch_ratio>
         <learning_rate>0.01</learning_rate>
-        <decaying_rate>0.4</decaying_rate>
+        <decaying_rate>0.5</decaying_rate>
         <bias>0</bias>
-        <thread_size>4</thread_size>
+        <thread_size>8</thread_size>
         <loss_type>L2</loss_type>
         <cost>1</cost>
-        <tolerance_delta>0.5</tolerance_delta>
+        <tolerance_delta>0.01</tolerance_delta>
     </optimizer>
 	<aggregate tolerance_delta="0.01" max_tolerance="5"/>
 	<ambiguity_class_threshold>0.4</ambiguity_class_threshold>
