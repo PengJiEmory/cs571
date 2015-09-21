@@ -19,7 +19,7 @@
         <thread_size>4</thread_size>
         <loss_type>L2</loss_type>
         <cost>1</cost>
-        <tolerance_delta>0.1</tolerance_delta>
+        <tolerance_delta>0.5</tolerance_delta>
     </optimizer>
     
 	<aggregate tolerance_delta="0.01" max_tolerance="5"/>
