@@ -19,10 +19,13 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.FileInputStream;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.junit.Test;
 
 import edu.emory.mathcs.nlp.common.util.Joiner;
+import edu.emory.mathcs.nlp.component.util.feature.Direction;
+import edu.emory.mathcs.nlp.component.util.feature.Field;
 import edu.emory.mathcs.nlp.component.util.node.FeatMap;
 import edu.emory.mathcs.nlp.component.util.reader.TSVReader;
 
@@ -81,4 +84,58 @@ public class DEPNodeTest
 		assertEquals(node1, list.get(0));
 		assertEquals(node4, list.get(1));
 	}
+	
+	//PJ tests start
+	@Test
+	public void testGetters()
+	{    
+	    DEPNode node1  = new DEPNode(1 , "David");
+	    DEPNode node2  = new DEPNode(2 , "'s");
+	    DEPNode node3  = new DEPNode(3 , "officers");
+	    DEPNode node4  = new DEPNode(4 , "went");
+	    DEPNode node5  = new DEPNode(5 , "to");
+	    DEPNode node6  = new DEPNode(6 , "the");
+	    DEPNode node7  = new DEPNode(7 , "east");
+	    DEPNode node8  = new DEPNode(8 , "land");
+	    DEPNode node9  = new DEPNode(9 , "of");
+	    DEPNode node10 = new DEPNode(10 , "the");
+	    DEPNode node11 = new DEPNode(11, "Ammonites");
+	    
+	    node1.addDependent(node2);
+	    node4.addDependent(node1);
+	    node3.addDependent(node1);
+	    node4.addDependent(node3);
+	    node4.addDependent(node5);
+	    node5.addDependent(node8);
+	    node8.addDependent(node6, "det");
+	    node8.addDependent(node7);
+	    node8.addDependent(node9);
+	    node9.addDependent(node11);
+	    node11.addDependent(node10, "det");
+	    
+	    String[] labels = {"dobj","nsubj","det","nn", "punct","num","prep"};
+	    node1.setLabel("nsubj");
+	    assertEquals("nsubj", node1.getLabel());
+	    assertEquals(node9, node11.getGrandHead());
+	    assertEquals(node3, node1.getHead());
+	    assertEquals(node7, node9.getLeftNearestSibling());
+	    assertEquals(node7, node9.getLeftNearestSibling(1));
+	    assertEquals(node6, node9.getLeftNearestSibling("det"));
+	    assertEquals(null, node9.getLeftNearestSibling("num"));
+	    assertEquals(node5, node3.getRightNearestSibling());
+	    assertEquals(node6, node8.getLeftMostDependent());
+	    assertEquals(node7, node8.getLeftMostDependent(1));
+	    assertEquals(node7, node8.getLeftNearestDependent());
+	    assertEquals(node6, node8.getFirstDependentByLabel(Pattern.compile("d..")));
+	    List<DEPNode> nodes = node8.getDescendantList(2);
+	    assertEquals(nodes.get(3), node11);
+	    node10.setPOSTag("DT");
+	    assertEquals(node10, node9.getAnyDescendantByPOSTag("DT"));
+	    assertEquals(3, node8.getDependentSize());
+	    assertEquals("<<->", node8.getValency(Direction.all));
+	    assertEquals(">det", node11.getSubcategorization(Direction.all,  Field.dependency_label));
+	    assertEquals(node8, node6.getLowestCommonAncestor(node10));
+	    assertEquals("^1|3", node6.getPath(node10, Field.distance));
+	}
+	//PJ tests end
 }
