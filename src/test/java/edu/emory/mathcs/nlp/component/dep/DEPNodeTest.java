@@ -113,13 +113,13 @@ public class DEPNodeTest
 	    node9.addDependent(node11);
 	    node11.addDependent(node10, "det");
 	    
-	    String[] labels = {"dobj","nsubj","det","nn", "punct","num","prep"};
+	    //String[] labels = {"dobj","nsubj","det","nn", "punct","num","prep"};
 	    node1.setLabel("nsubj");
 	    assertEquals("nsubj", node1.getLabel());
-	    assertEquals(node9, node11.getGrandHead());
+	    assertEquals(node9, node10.getGrandHead());
 	    assertEquals(node3, node1.getHead());
 	    assertEquals(node7, node9.getLeftNearestSibling());
-	    assertEquals(node7, node9.getLeftNearestSibling(1));
+	    assertEquals(node6, node9.getLeftNearestSibling(1));
 	    assertEquals(node6, node9.getLeftNearestSibling("det"));
 	    assertEquals(null, node9.getLeftNearestSibling("num"));
 	    assertEquals(node5, node3.getRightNearestSibling());
@@ -133,7 +133,7 @@ public class DEPNodeTest
 	    assertEquals(node10, node9.getAnyDescendantByPOSTag("DT"));
 	    assertEquals(3, node8.getDependentSize());
 	    assertEquals("<<->", node8.getValency(Direction.all));
-	    assertEquals(">det", node11.getSubcategorization(Direction.all,  Field.dependency_label));
+	    assertEquals("<det", node11.getSubcategorization(Direction.all,  Field.dependency_label));
 	    assertEquals(node8, node6.getLowestCommonAncestor(node10));
 	    assertEquals("^1|3", node6.getPath(node10, Field.distance));
 	}
