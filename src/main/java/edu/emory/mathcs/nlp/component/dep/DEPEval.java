@@ -61,7 +61,8 @@ public class DEPEval implements Eval
 	@Override
 	public double score()
 	{
-		return getLAS();
+		//return getLAS();
+		return getUAS();
 	}
 	
 	@Override
